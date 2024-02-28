@@ -11,9 +11,9 @@ const MainNav = () => {
     <span className='flex space-x-2 items-center'>
       {/* {isAuthenticated ? ( */}
         <>
-          <Link href='/order-status' className='font-bold hover:text-orange-500'>
+          {/* <Link href='/order-status' className='font-bold hover:text-orange-500'>
             Order Status
-          </Link>
+          </Link> */}
           {/* <UsernameMenu /> */}
         </>
       {/* ) : ( */}
