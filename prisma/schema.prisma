@@ -14,14 +14,14 @@ datasource db {
 }
 
 model User {
-  id           String       @id @default(uuid())
-  email        String       @unique
-  name         String?
-  addressLine1 String?
-  city         String?
-  country      String?
-  restaurants  Restaurant[]
-  orders       Order[]
+  id          String       @id @default(uuid())
+  email       String       @unique
+  name        String?
+  address     String?
+  city        String?
+  country     String?
+  restaurants Restaurant[]
+  orders      Order[]
 }
 
 model MenuItem {
