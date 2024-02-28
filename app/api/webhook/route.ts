@@ -53,7 +53,7 @@ export async function POST(req: Request) {
 
   const eventType = evt.type;
 
-    console.log(evt)
+  console.log(evt);
 
   if (eventType === "user.created") {
     const { id, email_addresses, image_url, username, first_name, last_name } =
@@ -61,15 +61,13 @@ export async function POST(req: Request) {
 
     // Create a new user in your database
     const dbUser = await createUser({
-      id: id,
+      clerkId: id,
 
       email: email_addresses[0].email_address,
     });
-console.log(dbUser)
+    console.log(dbUser);
     return NextResponse.json({ message: "OK", user: dbUser });
   }
-
-
 
   return NextResponse.json({ message: "OK" });
 }

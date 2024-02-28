@@ -13,8 +13,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model User {
   id           String       @id @default(uuid())
+  clerkId      String       @unique
   email        String       @unique
   name         String?
   addressLine1 String?
@@ -29,6 +31,7 @@ model MenuItem {
   name  String
   price Float
 }
+
 
 model Restaurant {
   id                    String   @id @default(uuid())
