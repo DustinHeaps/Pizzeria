@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id           String       @id @default(uuid())
+  clerkId      String       @unique
+  email        String       @unique
+  name         String?
+  addressLine1 String?
+  city         String?
+  country      String?
+  restaurants  Restaurant[]
+  orders       Order[]
+}
+
+model MenuItem {
+  id    String @id @default(uuid())
+  name  String
+  price Float
+}
+
+
+model Restaurant {
+  id                    String   @id @default(uuid())
+  userId                String
+  user                  User     @relation(fields: [userId], references: [id])
+  restaurantName        String
+  city                  String
+  country               String
+  deliveryPrice         Float
+  estimatedDeliveryTime Int
+  cuisines              String[] @db.VarChar
+  menuItems             Json // Storing MenuItem as JSON
+  imageUrl              String
+  lastUpdated           DateTime @updatedAt
+  orders                Order[]
+}
+
+model Order {
+  id              String      @id @default(uuid())
+  restaurantId    String
+  restaurant      Restaurant  @relation(fields: [restaurantId], references: [id])
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
+  deliveryDetails Json // Embedding deliveryDetails as JSON
+  cartItems       Json // Embedding cartItems as JSON, array of objects
+  totalAmount     Float?
+  status          OrderStatus @default(placed)
+  createdAt       DateTime    @default(now())
+}
+
+enum OrderStatus {
+  placed
+  paid
+  inProgress
+  outForDelivery
+  delivered
+}
