@@ -60,10 +60,30 @@ export async function POST(req: Request) {
       evt.data;
 
     // Create a new user in your database
-    const dbUser = await createUser({
-      clerkId: id,
+    // const dbUser = await prisma?.user.create(clerkId: id)
+    // await prisma?.user.create({
+    // where: { id: id },
+    // update: {
+    //   name: name,
+    //   gstNumber: gstNumber,
+    // },
+    // create: {
+    // clerkId: id,
+    // email: email_addresses[0].email_address,
+    // },
+    // });
+    // const dbUser = await prisma.user.create{{
+    //   clerkId: id,
 
-      email: email_addresses[0].email_address,
+    //   email: email_addresses[0].email_address,
+    // });
+    // await prisma.user.create(userData);
+    const dbUser = await prisma?.user.create({
+      data: {
+        id: id,
+        // clerkId: id, // Assuming you want to use Clerk's user ID
+        email: email_addresses[0].email_address, // Example: Accessing the primary email
+      },
     });
     console.log(dbUser);
     return NextResponse.json({ message: "OK", user: dbUser });
